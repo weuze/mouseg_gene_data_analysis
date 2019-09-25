@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1562323682704.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "462906F0",
+    "lastKnownWriteTime" : 1562619931,
+    "last_content_update" : 1562619932019,
+    "path" : "~/BIOINFORMATICS/roya_bioinf_project_2/script_2.r",
+    "project_path" : "script_2.r",
+    "properties" : {
+        "cursorPosition" : "0,0",
+        "docOutlineVisible" : "0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

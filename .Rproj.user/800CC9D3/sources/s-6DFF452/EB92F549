@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1569415177093.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "61181742",
+    "id" : "EB92F549",
+    "lastKnownWriteTime" : 1569415359,
+    "last_content_update" : 1569415359748,
+    "path" : "~/BIOINFORMATICS/mouse_gene_data_project/.gitignore",
+    "project_path" : ".gitignore",
+    "properties" : {
+        "cursorPosition" : "3,5",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "gitignore"
+}

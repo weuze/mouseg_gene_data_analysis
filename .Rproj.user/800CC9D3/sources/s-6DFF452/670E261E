@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1563800548709.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "670E261E",
+    "lastKnownWriteTime" : 3,
+    "last_content_update" : 1563800548709,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "EF49F268",
+        "caption" : "Heart",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Heart&cache_key=EF49F268",
+        "displayedObservations" : 2,
+        "environment" : "",
+        "object" : "Heart",
+        "preview" : 0,
+        "totalObservations" : 2,
+        "variables" : 2
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

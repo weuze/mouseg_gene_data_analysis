@@ -1,0 +1,184 @@
+library(VennDiagram)
+library(stringr)
+library(ggplot2)
+
+## we upload the data file to the R
+dataSet <- read.table("./data.txt", header = TRUE, row.names = 1)
+dim (dataSet)                  #number of rows and columns
+table(dataSet$gene_type)       #number of lincRNA and protein_coding
+head(dataSet)
+
+# replace thymys to thymus
+names(dataSet) <- str_replace(names(dataSet), pattern = 'Thymys',replacement = 'Thymus')
+
+adrenal_glands2 <- list () #generate an empty list
+adrenal_glands2 <- cbind(apply (adrenal_glands, 1, mean)) #use the apply to calculate the mean
+adrenal_glands_sorted <- cbind(order(adrenal_glands2, decreasing = TRUE)) #use order to order the data in descending way
+head (adrenal_glands2[adrenal_glands_sorted]) #to show the head of the sorted organ
+
+brain2 <- list ()
+brain2 <- cbind(apply(brain, 1, mean))
+brain_sorted <- cbind(order(brain2, decreasing = TRUE))
+head(brain2[brain_sorted,])
+
+
+forestomach2 <- list ()
+forestomach2 <- cbind(apply(forestomach, 1, mean))
+forestomach_sorted <- cbind(order(forestomach2, decreasing = TRUE))
+head(forestomach2[forestomach_sorted,])
+
+
+heart2 <- list ()
+heart2 <- cbind(apply(heart, 1, mean))
+heart_sorted <- cbind(order(heart2, decreasing = TRUE))
+head(heart2[heart_sorted,])
+
+
+kidney2 <- list ()
+kidney2 <- cbind(apply(kidney, 1, mean))
+kidney_sorted <- cbind(order(kidney2, decreasing = TRUE))
+head(kidney2[kidney_sorted,])
+
+
+liver2 <- list ()
+liver2 <- cbind(apply(liver, 1, mean))
+liver_sorted <- cbind(order(liver2, decreasing = TRUE))
+head(liver2[liver_sorted,])
+
+
+large_intestine2 <- list ()
+large_intestine2 <- cbind(apply(large_intestine, 1, mean))
+large_intestine_sorted <- cbind(order(large_intestine2, decreasing = TRUE))
+head(large_intestine2[large_intestine_sorted,])
+
+
+lung2 <- list ()
+lung2 <- cbind(apply(lung, 1, mean))
+lung_sorted <- cbind(order(lung2, decreasing = TRUE))
+head(lung2[lung_sorted,])
+
+
+muscle2 <- list ()
+muscle2 <- cbind(apply(muscle, 1, mean))
+muscle_sorted <- cbind(order(muscle2, decreasing = TRUE))
+head(muscle2[muscle_sorted,])
+
+
+ovary2 <- list ()
+ovary2 <- cbind(apply(ovary, 1, mean))
+ovary_sorted <- cbind(order(ovary2, decreasing = TRUE))
+head (ovary2[ovary_sorted,])
+
+
+small_intestine2 <- list ()
+small_intestine2 <- cbind(apply(small_intestine, 1, mean))
+small_intestine_sorted <- cbind(order(small_intestine2, decreasing = TRUE))
+head(small_intestine2[small_intestine_sorted,])
+
+
+spleen2 <- list ()
+spleen2 <- cbind(apply(spleen, 1, mean))
+spleen_sorted <- cbind(order(spleen2, decreasing = TRUE))
+head(spleen2[spleen_sorted,])
+
+
+stomach2 <- list ()
+stomach2 <- cbind(apply(stomach, 1, mean))
+stomach_sorted <- cbind(order(stomach2, decreasing = TRUE))
+head(stomach2[stomach_sorted,])
+
+
+testis2 <- list ()
+testis2 <- cbind(apply(testis, 1, mean))
+testis_sorted <- cbind(order(testis2, decreasing = TRUE))
+head(testis2[testis_sorted,])
+
+
+thymus2 <- list ()
+thymus2 <- cbind(apply(thymus, 1, mean))
+thymus_sorted <- cbind(order(thymus2, decreasing = TRUE))
+head(thymus2[thymus_sorted,])
+
+
+uterus2 <- list ()
+uterus2 <- cbind(apply(uterus, 1, mean))
+uterus_sorted <- cbind(order(uterus2, decreasing = TRUE))
+head(uterus2[uterus_sorted,])
+
+
+vesicular_gland2 <- list ()
+vesicular_gland2 <- cbind(apply(vesicular_gland, 1, mean))
+vesicular_gland_sorted <- cbind(order(vesicular_gland2, decreasing = TRUE))
+head(vesicular_gland2[vesicular_gland_sorted,])
+
+exp_level_for_all_organs <- data.frame (adrenal_glands =adrenal_glands2, brain= brain2 ,forestomach= forestomach2, heart = heart2, kidney = kidney2, liver = liver2, large_intestine = large_intestine2, lung= lung2, muscle= muscle2, ovary= ovary2, small_intestine= small_intestine2, spleen= spleen2, stomach= stomach2, testis= testis2, thymus= thymus2, uterus= uterus2, vesicular_gland= vesicular_gland2)
+head (exp_level_for_all_organs) #to show the first 6 rows of the data frame
+
+
+
+
+# bind all the column but select gene_type column only for the first organ to avoid duplication of the gene_type column
+
+exp_gene_count <- cbind(Adrenal,Brain[2],Forestomach[2],Heart[2],Kidney[2],Liver[2],Large[2],Lung[2],
+                        Muscle[2],Ovary[2],Small[2],Spleen[2],Stomach[2],Testis[2],Thymus[2],Uterus[2],Vescicular[2])
+exp_gene_count
+
+
+#  Venn Diagramm for the three organs : kidney, heart and  Adrenal_gland
+
+get_expressed_genes <- function(organ){
+  all_samples <- dataSet[,str_starts(names(dataSet), pattern = paste("gene", organ, sep = "|"))] # select sample of an organ and the gene_type column
+  gene_expressed_row_sum <- rowSums(all_samples[,-1]>0.1) # for each row we take every sample check if the value is greate than 0.1 and make the sum of boolean values for each row
+  gene_expressed_check <- gene_expressed_row_sum == dim(all_samples[,-1])[2] # check if the gene is expressed by taking the row sum and see if it is equal to the number of samples for the organ
+  gene_expressed <- all_samples[gene_expressed_check,] # use the codition to filter all samples and get only expressed genes
+  gene_expressed$gene_name <- rownames(gene_expressed) # we store the names of the genes in a new column named gene_names
+  gene_expressed <- gene_expressed[c("gene_type", "gene_name")]  # We select the gene_type and the gene_name column
+  gene_expressed 
+}
+
+
+
+kidney_genes <- get_expressed_genes("Kidney") # get genes expressed in kidney
+heart_genes <- get_expressed_genes("Heart") # get genes expressed in Heart
+adrenal_genes <- get_expressed_genes("Adrenal") # get genes expressed in Adrenal
+
+# ploting the venn diagrams
+
+venn_titles <- c("Heart", "kidney", "Adrenal")
+
+venn.diagram(x = list(heart_genes$gene_name, kidney_genes$gene_name, adrenal_genes$gene_name), 
+             category.names = venn_titles,
+             imagetype = "png",
+             filename = 'Venn_diagram_1.png', 
+             col = c("red", "blue", "green"))
+
+venn.diagram(x = list(heart_genes[heart_genes$gene_type=="protein_coding","gene_name"], 
+                      kidney_genes[kidney_genes$gene_type=="protein_coding","gene_name"], 
+                      adrenal_genes[adrenal_genes$gene_type=="protein_coding","gene_name"]), 
+             category.names = venn_titles,
+             imagetype = "png",
+             filename = 'Venn_diagram_2.png', 
+             col = c("red", "blue", "green"))
+
+venn.diagram(x = list(heart_genes[heart_genes$gene_type=="lincRNA","gene_name"], 
+                      kidney_genes[kidney_genes$gene_type=="lincRNA","gene_name"], 
+                      adrenal_genes[adrenal_genes$gene_type=="lincRNA","gene_name"]), 
+             category.names = venn_titles,
+             imagetype = "png",
+             filename = 'Venn_diagram_3.png', 
+             col = c("red", "blue", "green"))
+
+# Make the barplot
+
+
+liver_samples <- dataSet[,str_starts(names(dataSet), pattern ="Liver")] # select sample of the liver organ and the gene_type column
+exp_order <- function (organ,o.1)
+  organ_most_20 <- list()
+organ_most_20 <- cbind(organ[o2,])[1:20,1]
+return (organ_most_20)
+most_20_liver <- exp_order (liver2, liver_sorted)
+
+# Drawing the barplot for each sample of data for the liver organ and also using the rownmae as the label for the x axis
+boxplot (most_20_liver, 
+         names = c("liver")
+         , col= "darkred", main= paste ("most 20 expressed genes") )

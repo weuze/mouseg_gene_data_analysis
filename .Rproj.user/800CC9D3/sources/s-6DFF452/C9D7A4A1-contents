@@ -1,0 +1,304 @@
+---
+title: "Ruba Al khalaf, Maral Barkhordari, Maria Isabel Costa project#5"
+output:
+  html_document:
+    df_print: paged
+---
+We worked on the project #5, let's start:
+
+first we upload the Mouse_Transcriptomics.txt file to the working directory
+
+```{r}
+mouse_transcriptomics_original <- read.table (file = "Mouse_Transcriptomics.txt", header = TRUE, row.names = 1)
+dim (mouse_transcriptomics_original)   #number of rows and colomns
+table(mouse_transcriptomics_original$gene_type) #number of lincRNA and protein_coding
+
+mouse_transcriptomics <- mouse_transcriptomics_original [mouse_transcriptomics_original$gene_type == "lincRNA",] #to work only on the lincRNA 
+
+```
+
+to define the colomns occupied by each organ.
+note: we started from the second colomns to ignore the gene_type colomn
+```{r}
+adrenal_glands <- mouse_transcriptomics [, 2:5] #to determine the colomns for each organ
+brain <- mouse_transcriptomics [,6:9]
+forestomach <- mouse_transcriptomics [, 10:13]
+heart <- mouse_transcriptomics [, 14:17]
+kidney <- mouse_transcriptomics [, 18:21]
+liver <- mouse_transcriptomics [, 22:25]
+large_intestine <- mouse_transcriptomics [, 26:29]
+lung <- mouse_transcriptomics [, 30: 33]
+muscle <- mouse_transcriptomics [, 34:37]
+ovary <- mouse_transcriptomics [, 38:39]
+small_intestine <- mouse_transcriptomics [, 40:43]
+spleen <- mouse_transcriptomics [, 44:47]
+stomach <- mouse_transcriptomics [, 48:51]
+testis <- mouse_transcriptomics [, 52:53]
+thymus <- mouse_transcriptomics [, 54:57]
+uterus <- mouse_transcriptomics [, 58:59]
+vesicular_gland <- mouse_transcriptomics [, 60:61]
+```
+
+
+now we calculate the expression level for each gene in  all samples for every organ which is equal to the mean of all samples of that organ.
+at the same time, we sort the generated data
+we generate two lists for each organ, we using them together on all the organs
+```{r}
+adrenal_glands2 <- list () #generate an empty list
+adrenal_glands2 <- cbind(apply (adrenal_glands, 1, mean)) #use the apply to calculate the mean
+adrenal_glands_sorted <- cbind(order(adrenal_glands2, decreasing = TRUE)) #use order to order the data in descending way
+head (adrenal_glands2[adrenal_glands_sorted]) #to show the head of the sorted organ
+
+brain2 <- list ()
+brain2 <- cbind(apply(brain, 1, mean))
+brain_sorted <- cbind(order(brain2, decreasing = TRUE))
+head(brain2[brain_sorted,])
+
+
+forestomach2 <- list ()
+forestomach2 <- cbind(apply(forestomach, 1, mean))
+forestomach_sorted <- cbind(order(forestomach2, decreasing = TRUE))
+head(forestomach2[forestomach_sorted,])
+
+
+heart2 <- list ()
+heart2 <- cbind(apply(heart, 1, mean))
+heart_sorted <- cbind(order(heart2, decreasing = TRUE))
+head(heart2[heart_sorted,])
+
+
+kidney2 <- list ()
+kidney2 <- cbind(apply(kidney, 1, mean))
+kidney_sorted <- cbind(order(kidney2, decreasing = TRUE))
+head(kidney2[kidney_sorted,])
+
+
+liver2 <- list ()
+liver2 <- cbind(apply(liver, 1, mean))
+liver_sorted <- cbind(order(liver2, decreasing = TRUE))
+head(liver2[liver_sorted,])
+
+
+large_intestine2 <- list ()
+large_intestine2 <- cbind(apply(large_intestine, 1, mean))
+large_intestine_sorted <- cbind(order(large_intestine2, decreasing = TRUE))
+head(large_intestine2[large_intestine_sorted,])
+
+
+lung2 <- list ()
+lung2 <- cbind(apply(lung, 1, mean))
+lung_sorted <- cbind(order(lung2, decreasing = TRUE))
+head(lung2[lung_sorted,])
+
+
+muscle2 <- list ()
+muscle2 <- cbind(apply(muscle, 1, mean))
+muscle_sorted <- cbind(order(muscle2, decreasing = TRUE))
+head(muscle2[muscle_sorted,])
+
+
+ovary2 <- list ()
+ovary2 <- cbind(apply(ovary, 1, mean))
+ovary_sorted <- cbind(order(ovary2, decreasing = TRUE))
+head (ovary2[ovary_sorted,])
+
+
+small_intestine2 <- list ()
+small_intestine2 <- cbind(apply(small_intestine, 1, mean))
+small_intestine_sorted <- cbind(order(small_intestine2, decreasing = TRUE))
+head(small_intestine2[small_intestine_sorted,])
+
+
+spleen2 <- list ()
+spleen2 <- cbind(apply(spleen, 1, mean))
+spleen_sorted <- cbind(order(spleen2, decreasing = TRUE))
+head(spleen2[spleen_sorted,])
+
+
+stomach2 <- list ()
+stomach2 <- cbind(apply(stomach, 1, mean))
+stomach_sorted <- cbind(order(stomach2, decreasing = TRUE))
+head(stomach2[stomach_sorted,])
+
+
+testis2 <- list ()
+testis2 <- cbind(apply(testis, 1, mean))
+testis_sorted <- cbind(order(testis2, decreasing = TRUE))
+head(testis2[testis_sorted,])
+
+
+thymus2 <- list ()
+thymus2 <- cbind(apply(thymus, 1, mean))
+thymus_sorted <- cbind(order(thymus2, decreasing = TRUE))
+head(thymus2[thymus_sorted,])
+
+
+uterus2 <- list ()
+uterus2 <- cbind(apply(uterus, 1, mean))
+uterus_sorted <- cbind(order(uterus2, decreasing = TRUE))
+head(uterus2[uterus_sorted,])
+
+
+vesicular_gland2 <- list ()
+vesicular_gland2 <- cbind(apply(vesicular_gland, 1, mean))
+vesicular_gland_sorted <- cbind(order(vesicular_gland2, decreasing = TRUE))
+head(vesicular_gland2[vesicular_gland_sorted,])
+
+
+```
+
+we generate a data frame contain the mean of each organ (without sorting)
+
+```{r}
+exp_level_for_all_organs <- data.frame (adrenal_glands =adrenal_glands2, brain= brain2 ,forestomach= forestomach2, heart = heart2, kidney = kidney2, liver = liver2, large_intestine = large_intestine2, lung= lung2, muscle= muscle2, ovary= ovary2, small_intestine= small_intestine2, spleen= spleen2, stomach= stomach2, testis= testis2, thymus= thymus2, uterus= uterus2, vesicular_gland= vesicular_gland2)
+head (exp_level_for_all_organs) #to show the first 6 rows of the data frame
+
+```
+
+now we built a function to extract the most 100 expressed genes
+```{r}
+exp_order <- function (organ,o2)
+{
+  organ_most_100 <- list()
+  organ_most_100 <- cbind(organ[o2,])[1:100,1]
+  return (organ_most_100)
+}
+```
+
+we call the function in all organs
+```{r}
+most_100_stomach <- exp_order(stomach2, stomach_sorted)
+most_100_adrenal <- exp_order (adrenal_glands2,adrenal_glands_sorted)
+most_100_heart <- exp_order (heart2, heart_sorted)
+most_100_kidney <- exp_order (kidney2, kidney_sorted)
+most_100_liver <- exp_order (liver2, liver_sorted)
+most_100_large_intestine <- exp_order (large_intestine2, large_intestine_sorted)
+most_100_lung <- exp_order (lung2, lung_sorted)
+most_100_muscle <- exp_order (muscle2, muscle_sorted)
+most_100_ovary <- exp_order (ovary2, ovary_sorted)
+most_100_small_intestine <- exp_order (small_intestine2, small_intestine_sorted)
+most_100_spleen <- exp_order (spleen2, spleen_sorted)
+most_100_testis <- exp_order (testis2, testis_sorted)
+most_100_brain <- exp_order (brain2,brain_sorted)    
+most_100_thymus <- exp_order (thymus2, thymus_sorted)
+most_100_uterus <- exp_order (uterus2, uterus_sorted)
+most_100_vesicular_gland <- exp_order (vesicular_gland2, vesicular_gland_sorted)
+most_100_forestomach <- exp_order (forestomach2, forestomach_sorted)
+
+```
+
+generate a data frame contains the value of most 100 expressed lincRNA genes for each organ
+NOTE: it differs form organ to organ that is why we delete the names of the rows
+
+```{r}
+most_exp_level_for_all_organs <- data.frame (adrenal_glands = most_100_adrenal, brain = most_100_brain ,forestomach = most_100_forestomach, heart = most_100_heart, kidney = most_100_kidney, liver = most_100_liver, large_intestine = most_100_large_intestine, lung= most_100_lung, muscle= most_100_muscle, ovary= most_100_ovary, small_intestine= most_100_small_intestine, spleen= most_100_spleen, stomach= most_100_stomach, testis= most_100_testis, thymus= most_100_thymus, uterus= most_100_uterus, vesicular_gland= most_100_vesicular_gland)
+rownames (most_exp_level_for_all_organs) <- NULL
+head (most_exp_level_for_all_organs)
+```
+
+we do not want to lose the names of the genes! that is why we generate another data frame with the names of the 100 most expressed lincRNA genes for all organs
+```{r}
+names_for_most_genes_sorted <- data.frame(adrenal_glands = row.names(exp_level_for_all_organs[adrenal_glands_sorted[1:100,1],] ), brain = row.names(exp_level_for_all_organs[brain_sorted[1:100,1],] ) ,forestomach = row.names(exp_level_for_all_organs[forestomach_sorted[1:100,1],] ), heart = row.names(exp_level_for_all_organs[heart_sorted[1:100,1],] ), kidney = row.names(exp_level_for_all_organs[kidney_sorted[1:100,1],] ), liver = row.names(exp_level_for_all_organs[liver_sorted[1:100,1],] ), large_intestine = row.names(exp_level_for_all_organs[large_intestine_sorted[1:100,1],] ), lung= row.names(exp_level_for_all_organs[lung_sorted[1:100,1],] ), muscle= row.names(exp_level_for_all_organs[muscle_sorted[1:100,1],] ), ovary= row.names(exp_level_for_all_organs[ovary_sorted[1:100,1],] ), small_intestine= row.names(exp_level_for_all_organs[small_intestine_sorted[1:100,1],] ), spleen= row.names(exp_level_for_all_organs[spleen_sorted[1:100,1],] ), stomach= row.names(exp_level_for_all_organs[stomach_sorted[1:100,1],] ), testis= row.names(exp_level_for_all_organs[testis_sorted[1:100,1],] ), thymus= row.names(exp_level_for_all_organs[thymus_sorted[1:100,1],] ), uterus= row.names(exp_level_for_all_organs[uterus_sorted[1:100,1],] ), vesicular_gland= row.names(exp_level_for_all_organs[vesicular_gland_sorted[1:100,1],] ))
+
+head (names_for_most_genes_sorted)
+
+```
+
+in order to use the data from the previous data frame, we have to change their type from strings into characters (we will need it in further steps)
+```{r}
+Q <- sapply(names_for_most_genes_sorted, is.factor)
+names_for_most_genes_sorted[Q] <- lapply(names_for_most_genes_sorted[Q], as.character)
+
+```
+
+
+draw the  17 boxplots
+```{r}
+boxplot (most_100_brain, most_100_adrenal ,most_100_forestomach, most_100_vesicular_gland,most_100_uterus, most_100_thymus, most_100_testis, most_100_spleen, most_100_small_intestine, most_100_ovary, most_100_muscle, most_100_lung, most_100_large_intestine, most_100_liver, most_100_kidney, most_100_heart, most_100_stomach, 
+         names = c("brain", "adrenal glands", "forestomach", "vesicular glands", "uterus", "thymus",  "testis","spleen", "small intestine", "ovary", "muscle", "lung", "large intestine", "liver", "kidney", "heart", "stomach")
+         , col= "darkred", main= paste ("most 100 expressed lincRNA genes"), outline = FALSE)
+
+
+```
+
+draw the vennDiagram of four organs (brain, stomach, thymus, spleen), we choose the thereshold equals 10 to get enough data.
+```{r}
+#install.packages("VennDiagram") #to install the library just delete the first hashtag at this line
+library ("VennDiagram") #to open the library
+Brain <- row.names (most_exp_level_for_all_organs)[most_exp_level_for_all_organs[,"brain"]>10]
+Stomach <- row.names (most_exp_level_for_all_organs)[most_exp_level_for_all_organs[,"stomach"]>10]
+Thymus <- row.names (most_exp_level_for_all_organs)[most_exp_level_for_all_organs[,"thymus"]>10]
+Spleen <- row.names (most_exp_level_for_all_organs)[most_exp_level_for_all_organs[,"spleen"]>10]
+Venn <- list (Brain, Stomach, Thymus, Spleen)
+venn.diagram(Venn, category.names = c("brain", "stomach", "thymus", "spleen"), 
+             filename = "venn_from_most_100.png", imagetype = "png",
+             main = "venn diagram of highly expressed lincRNA genes",                 
+             col = c( "blue", "green", "red", "yellow"))
+
+
+```
+
+we generat an empty 17x17 matrix to fill it up by compairing the names of lincRNA genes between the organs
+```{r}
+compairing_matrix <- matrix( data = NA, nrow = 17, ncol = 17)
+rownames(compairing_matrix) <- c("adrenal glands", "brain", "forestomach", "heart", "kidney", "liver", "large intestine", "lung", "muscle", "ovary", "small intestine", "spleen", "stomach", "testis", "thymus", "uterus", "vesicular glands")
+colnames(compairing_matrix) <- c("adrenal glands", "brain", "forestomach", "heart", "kidney", "liver", "large intestine", "lung", "muscle", "ovary", "small intestine", "spleen", "stomach", "testis", "thymus", "uterus", "vesicular glands")
+
+row <- rownames(compairing_matrix) #to use it if we want to print the names of the common genes
+col <- colnames (compairing_matrix) #to use it if we want to print the names of the common genes
+compairing_matrix
+  
+```
+
+
+- by this point, we have a 17x17 empty matrix. to fill it up we are going to need 4 for loops to compare between two genes of two organs
+```{r}
+for (i in 1:17){ #because we have 17 organs
+  for (j in 1:17) {
+    x<- list()
+    y <- list ()
+    
+    x <- names_for_most_genes_sorted[,i] #we fill the list organ by organ (by using for loop)
+    y <- names_for_most_genes_sorted[,j] #we fill the list organ by organ (by using for loop)
+   
+     count <- 0 #to count how many genes in commons between two organs
+    
+     for (a in 1:100){ #because we have 100 genes for each organ
+      for (b in 1:100){
+        c <- list ()
+        r <- list ()
+        c <- x [a] #we fill it up gene by gene (by using for loop)
+        r <- y [b]#we fill it up gene by gene (by using for loop)
+     
+            if (c==r) {
+          count <- count +1
+          compairing_matrix [i,j] <- count
+          #if we want to know the name of each gene in common just remove the next hashtag 
+          #print(paste(row [i], "has lincRNA gene in common with", col [j], "which is", c))
+          
+        } 
+      }
+    }
+  }
+}
+compairing_matrix
+```
+
+
+
+- we are going to work on the stomach as the organ of our choice.previously we already had the sorted data for it so we can get the first 10
+```{r}
+
+genes_names_to_plot <- list ()
+genes_names_to_plot <- names_for_most_genes_sorted$stomach[1:10] #to get the names of the 10 most expressed lincRNA
+genes_names_to_plot 
+
+genes_to_draw <- exp_level_for_all_organs [genes_names_to_plot,] #to get the expression levels of each gene in all organs
+
+par(mfrow= c(2,5)) #to divide the veiwing region into 2 rows and 5 colomns
+colors <- c("blue", "green", "darkred", "yellow", "pink", "orange", "white", "brown", "skyblue", "black", "red", "grey", "darkblue", "purple", "darkgreen", "blueviolet","darkgrey")
+bplot <- apply (genes_to_draw,1, barplot, col = colors, main = "genes")
+
+
+```
+

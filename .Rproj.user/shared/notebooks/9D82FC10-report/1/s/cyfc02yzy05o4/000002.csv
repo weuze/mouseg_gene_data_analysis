@@ -1,0 +1,3 @@
+"0","# dataSet <- read.table(""./data.txt"", sep=""\t"")"
+"0","# head(dataSet)"
+"0","View(head(dataSet))"
