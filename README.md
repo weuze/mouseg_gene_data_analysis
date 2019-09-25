@@ -1,23 +1,16 @@
 # mouseg_gene_data_analysis
----
-title: "Mouse genes data analysis"
-author: "Ousseynou Diallo"
-date: "19 juillet 2019"
-output:
-  pdf_document: default
-  html_document: default
----
+
+### The project
+![](assignment_pic.png)
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-library(VennDiagram)
-library(stringr)
-library(ggplot2)
-```
+
+<code>
+    library(VennDiagram)
+    library(stringr)
+    library(ggplot2)
+</code>
 
 
 ### Load the data into R
