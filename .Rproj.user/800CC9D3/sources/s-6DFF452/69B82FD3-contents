@@ -2,15 +2,15 @@
 title: "Mouse genes data analysis"
 author: "Ousseynou Diallo"
 date: "19 juillet 2019"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 
 ```{r setup, include=FALSE}
-badge<- "909122"
 knitr::opts_chunk$set(echo = TRUE)
 ```
-#### Badge: `r badge`
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(VennDiagram)
