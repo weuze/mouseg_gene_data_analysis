@@ -1,17 +1,14 @@
 # mouseg_gene_data_analysis
 
 ### The project
-![](assignment_pic.png)
+![](assignment_pic.jpg)
 
 
-
-
-<code>
+```{r}
     library(VennDiagram)
     library(stringr)
     library(ggplot2)
-</code>
-
+```
 
 ### Load the data into R
 
